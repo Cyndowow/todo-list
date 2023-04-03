@@ -1,0 +1,41 @@
+:root{
+    --background: #1f0812;
+    --background-semi: #4f646f;
+    --background-light: #eee;
+    --background-card: #adadac;
+    --white-text: #d0ddd7;
+    --button-color: #D0DDD7;
+    --button-hover: #dfede7;
+    --button-active: #bdc9c4;
+    --nav-hover: #7998a8;
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 1fr 5fr 1fr;
+}
+
+header {
+    display: flex;
+    background-color: var(--background);
+    color: var(--white-text);
+    font-size: x-large;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    display: flex;
+    background-color: var(--background);
+    color: var(--white-text);
+    font-size: x-large;
+    align-items: center;
+    justify-content: center;
+}

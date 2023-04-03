@@ -5,9 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do-List</title>
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
+    <link rel="stylesheet" href="../src/styles.css">
 </head>
 <body>
+    <header class="header">
+        <h1 class="page-name">To-Do-List</h1>
+    </header>
+
+    <main class="main">
+        <nav class="nav" id="nav">
+            <div class="default-projects-list">
+                <button class="default-btn" id="home-button">Home</button>
+                <button class="default-btn" id="today-button">Today</button>
+                <button class="default-btn" id="week-button">This Week</button>
+            </div>
+
+            <p class="custom-projects">Projects</p>
+            <div class="projects-list" id="projects-list"></div>
+            <button class="add-project-btn" id="add-project-btn">Add Project</button>
+            <div class="add-project-popup" id="add-project-popup">
+                <input type="text" class="input-add-project" id="input-add-project">
+                <div class="add-project-popup-btns" id="add-project-popup-btns">
+                    <button class="add-project-submit" id="add-project-submit">Add</button>
+                    <button class="add-project-cancel" id="add-project-cancel">Cancel</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="project-preview" id="project-preview"></div>
+    </main>
+
+    <footer class="footer">
+        dummy footer content
+    </footer>
     
 </body>
 </html>
