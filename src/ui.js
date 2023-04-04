@@ -21,6 +21,57 @@ export default class UI {
         UI.initProjectButtons();
     }
 
+    static loadProjectContent(projectName) {
+        const projectPreview = document.getElementById("project-preview");
+
+        const heading = document.createElement("div");
+        heading.textContent = projectName;
+        heading.classList.add("tasks-list");
+        heading.setAttribute("id", "tasks-list");
+
+        projectPreview.appendChild(heading);
+
+        if(projectName !== "Today" && projectName!== "This Week") {
+
+            const addTaskButton = document.createElement("button");
+            addTaskButton.textContent = "Add Task";
+            addTaskButton.classList.add("add-task-button");
+            addTaskButton.setAttribute("id", "add-task-button");
+
+            const addTaskPopup = document.createElement("div");
+            addTaskPopup.classList.add("add-task-popup");
+            addTaskPopup.setAttribute("id", "add-task-popup");
+
+            const addTaskInput = document.createElement("input");
+            addTaskInput.classList.add("add-task-input");
+            addTaskInput.setAttribute("id", "add-task-input");
+
+            const addTaskPopupButtons = document.createElement("div");
+            addTaskPopupButtons.classList.add("add-task-popup-buttons");
+            addTaskPopupButtons.setAttribute("id", "add-task-popup-buttons");
+
+
+            const addTaskPopupSubmit = document.createElement("button");
+            addTaskPopupSubmit.classList.add("add-task-popup-submit");
+            addTaskPopupSubmit.setAttribute("id", "add-task-popup-submit");
+            addTaskPopupSubmit.textContent = "Add";
+
+            const addTaskPopupCancel = document.createElement("button");
+            addTaskPopupCancel.classList.add("add-task-popup-cancel");
+            addTaskPopupCancel.setAttribute("id", "add-task-popup-cancel");
+            addTaskPopupCancel.textContent = "Cancel";
+
+            projectPreview.appendChild(addTaskButton);
+            
+            addTaskPopupButtons.appendChild(addTaskPopupSubmit);
+            addTaskPopupButtons.appendChild(addTaskPopupCancel);
+
+            addTaskPopup.appendChild(addTaskInput);
+            addTaskPopup.appendChild(addTaskPopupButtons);
+            //Details input?
+        }
+    }
+
     static initProjectButtons() {
         const homeBtn = document.getElementById("home-button");
         const todayBtn = document.getElementById("today-button");
@@ -61,8 +112,18 @@ export default class UI {
 
         buttons.forEach((button) => button.classList.remove("active"));
         projectButton.classList.add("active");
-        //function to close adding popup
+        UI.closeAddProjectPopup();
         //function to load project content
+    }
+
+    static closeAddProjectPopup() {
+        const addProjectPopup =  document.getElementById("add-project-popup");
+        const addProjectButton = document.getElementById("add-project-submit");
+        const addProjectPopupInput = document.getElementById("input-add-project");
+
+        addProjectButton.classList.remove("active");
+        addProjectPopup.classList.remove("acitve");
+        addProjectPopupInput.value = "";
     }
 
     static loadProjects() {
