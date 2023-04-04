@@ -21,7 +21,52 @@ export default class UI {
         UI.initProjectButtons();
     }
 
-    static createTask() {
+    static createTask(name, dueDate) { //Details?
+        const tasksList = document.getElementById("tasks-list");
+
+        const leftPanel = document.createElement("div");
+        leftPanel.classList.add("left-panel");
+
+        const rightPanel = document.createElement("div");
+        rightPanel.classList.add("right-panel");
+        
+        const taskButton = document.createElement("button");
+        taskButton.classList.add("task-button");
+        taskButton.dataset.task-button;
+
+        const taskContent = document.createElement("p");
+        taskContent.textContent = name;
+        taskContent.classList.add("task-content");
+
+        const inputTaskName = document.createElement("input");
+        inputTaskName.classList.add("input-task-name");
+        inputTaskName.dataset.input-task-name;
+
+        const dDate = document.createElement("p");
+        dDate.classList.add("due-date");
+        dDate.dataset.due-date;
+        dDate.setAttribute("id", "due-date");
+        dDate.textContent = `${dueDate}`;
+
+        const dateInput = document.createElement("input");
+        dateInput.classList.add("due-date-input");
+        dateInput.dataset.due-date-input;
+        dateInput.setAttribute("type", "date");
+
+        leftPanel.appendChild(taskContent);
+        leftPanel.appendChild(inputTaskName);
+        rightPanel.appendChild(dDate);
+        rightPanel.appendChild(dateInput);
+
+        taskButton.appendChild(leftPanel);
+        taskButton.appendChild(rightPanel);
+
+        tasksList.appendChild(taskButton);
+
+        UI.initTaskButtons();
+    }
+
+    static clearTasks() {
 
     }
 
@@ -92,6 +137,10 @@ export default class UI {
         });
     }
 
+    static initTaskButtons() {
+        
+    }
+
     static initAddTaskButtons() {
         const addTaskButton = document.getElementById("add-task-button");
         const addTaskPopup = document.getElementById("add-task-popup-submit");
@@ -157,6 +206,37 @@ export default class UI {
         if(document.getElementById("tasks-list") && document.getElementById("tasks-list").innerHTML !== "") {
             UI.closeAllInputs();
         }
+    }
+
+    static renameTask(e) {
+        if(e.key !== "Enter") return;
+
+        const projectName = document.getElementById("project-name").textContent;
+        const taskName = this.previousElementSibling.textContent; //Debug?
+        const newTaskName = this.value;
+
+        if(newTaskName === "") {
+            alert("Task name can't be empty!");
+            return;
+        }
+
+        if(Storage.getTodoList().getProject(projectName).contains(newTaskName)) {
+            this.value = "";
+            alert("Task names must be different!");
+            return;
+        }
+
+        if(projectName === "Today" || projectName === "This Week") {
+            const mainProjectName = taskName.split("(")[1].split(")")[0];
+            const mainTaskName = taskName.split(" ")[0];
+            Storage.renameTask(projectName, taskName, `${newTaskName} (${mainProjectName})`);
+            Storage.renameTask(mainProjectName, mainTaskName, newTaskName);
+        } else {
+            Storage.renameTask(projectName, taskName, newTaskName)
+        }
+        UI.clearTasks();
+        UI.loadTasks(projectName);
+        UI.closeRenameInput(this.parentNode.parentNode); //Debug?
     }
 
     static closeRenameInput(taskButton) {
