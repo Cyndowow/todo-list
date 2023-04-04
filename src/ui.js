@@ -375,8 +375,29 @@ export default class UI {
         dueDateInput.classList.remove("active");
     }
 
-    static setTaskDate() { ///////////////////////////
+    static setTaskDate() { //Debug much again?
+        const taskButton = this.parentNode.parentNode;
+        const projectName = document.getElementById("project-name").textContent;
+        const taskName = taskButton.children[0].children[1].textContent;
+        const newDueDate = format(new Date(this.value), "dd/mm/yyyy");
 
+        if(projectName === "Today" || projectName === "This Week") {
+            const mainProjectName = taskName.split("(")[1].split(")")[0];
+            const mainTaskName = taskName.split(" (")[0];
+            Storage.setTaskDate(projectName, taskName, newDueDate);
+            Storage.setTaskDate(mainProjectName, mainTaskName, newDueDate);
+            if(projectName === "Today") {
+                Storage.updateTodayProject();
+            } else {
+                Storage.updateWeekProject();
+            }
+        } else {
+            Storage.setTaskDate(projectName, taskname, newDueDate);
+        }
+
+        UI.clearTasksU();
+        UI.loadTasks(projectName);
+        UI.closeSetDateInput(taskButton);
     }
 
     static closeAllInputs() {
