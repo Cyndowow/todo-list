@@ -333,8 +333,20 @@ export default class UI {
         UI.closeRenameInput(this.parentNode.parentNode); //Debug?
     }
 
-    static openRenameInput() { /////////////////////////////
+    static openRenameInput(taskButton) { //Debug much?
+        const taskNamePara = taskButton.children[0].children[1];
+        let taskName = taskNamePara.textContent;
+        const taskNameInput = taskButton.children[0].children[2];
+        const projectName = taskButton.parentNode.parentNode.children[0].textContent;
 
+        if(projectName === "Today" || projectName === "This Week") {
+            ;[taskName] = taskName.split(" (");
+        }
+
+        UI.closeAllPopups();
+        taskNamePara.classList.add("active");
+        taskNameInput.classList.add("active");
+        taskNameInput.value = taskName;
     }
 
     static closeRenameInput(taskButton) {
