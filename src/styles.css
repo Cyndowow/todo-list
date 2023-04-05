@@ -17,9 +17,21 @@ html {
     padding: 0;
 }
 
+button {
+    padding: 9px;
+    margin: 5px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
 body {
     display: grid;
     grid-template-rows: 1fr 5fr 1fr;
+}
+
+h1 {
+    display: flex;
 }
 
 header {
@@ -38,4 +50,43 @@ footer {
     font-size: x-large;
     align-items: center;
     justify-content: center;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
+    background-color: var(--background-semi);
+}
+
+.default-btn {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.project-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.add-project-btn,
+.add-project-popup,
+.custom-projects {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-projects {
+    color: var(--white-text);
+    font-size: 1.5rem;
 }
