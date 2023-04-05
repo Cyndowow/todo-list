@@ -41,7 +41,8 @@ export default class UI {
         taskButton.setAttribute("data", "task-button");
 
         const circle = document.createElement("i");
-        circle.classList.add("far fa-circle");
+        circle.classList.add("far");
+        circle.classList.add("fa-circle")
 
         const taskContent = document.createElement("p");
         taskContent.textContent = name;
@@ -63,7 +64,8 @@ export default class UI {
         dateInput.setAttribute("type", "date");
 
         const cross = document.createElement("i");
-        cross.classList.add("fas fa-times");
+        cross.classList.add("fas");
+        cross.classList.add("fa-times");
         
         leftPanel.appendChild(circle);
         leftPanel.appendChild(taskContent);
@@ -109,11 +111,12 @@ export default class UI {
         heading.textContent = projectName;
         heading.setAttribute("id", "project-name");
         
-        const classlist = document.createElement("div");
-        classlist.classList.add("tasks-list");
-        classlist.setAttribute("id", "tasks-list");
+        const tasksList = document.createElement("div");
+        tasksList.classList.add("tasks-list");
+        tasksList.setAttribute("id", "tasks-list");
 
         projectPreview.appendChild(heading);
+        projectPreview.appendChild(tasksList);
 
         if(projectName !== "Today" && projectName!== "This week") {
 
@@ -316,7 +319,7 @@ export default class UI {
             return;
         }*/
 
-        Storage.addTask(projectName, new Task(taskName));
+        //Storage.addTask(projectName, new Task(taskName));
         UI.createTask(taskName, "No date");
         UI.closeAddTaskPopup();
     }
@@ -510,7 +513,7 @@ export default class UI {
         const addProjectInput = document.getElementById("input-add-project");
 
         addProjectButton.addEventListener("click", UI.addProject); 
-        addProjectPopupButton.addEventListener("click", UI.openAddProjectPopup); //missing
+        addProjectPopupButton.addEventListener("click", UI.openAddProjectPopup);
         cancelAddProjectButton = document.getElementById("click", UI.closeAddProjectPopup);
         addProjectInput.addEventListener("keypress", UI.handleProjectButton);
     }

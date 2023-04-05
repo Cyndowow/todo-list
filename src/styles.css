@@ -18,6 +18,7 @@ html {
 }
 
 button {
+    width: 100%;
     padding: 9px;
     margin: 5px;
     border-radius: 10px;
@@ -71,11 +72,10 @@ footer {
 }
 
 .project-preview {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    justify-self: center;
+    width: 900px;
     padding: 20px;
+    margin: 0 auto;
 }
 
 .add-project-btn,
@@ -89,4 +89,79 @@ footer {
 .custom-projects {
     color: var(--white-text);
     font-size: 1.5rem;
+}
+
+.task-button {
+    display: flex;
+    cursor: default;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.left-panel {
+    display: flex;
+    align-items: center;
+}
+
+.task-content {
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.task-content.active {
+    display: none;
+}
+
+.input-task-name {
+    display: none;
+}
+
+.input-task-name.active {
+    display: block;
+}
+
+.right-panel {
+    display: flex;
+    align-items: center;
+}
+
+.due-date {
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.due-date.active {
+    display: none;
+}
+
+.due-date-input {
+    display: none;
+}
+
+.due-date-input.active {
+    display: block;
+}
+
+.add-task-button.active {
+    display: none;
+}
+
+.add-task-popup {
+    display: none;
+}
+
+.add-task-popup.active {
+    display: block;
+}
+
+.fa-times {
+    margin: 0;
+    cursor: pointer;
+}
+
+.fa-circle {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    cursor: pointer;
 }

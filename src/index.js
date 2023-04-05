@@ -1,3 +1,11 @@
 import UI from "./ui";
 
-document.addEventListener("DOMContentLoaded", UI.loadHomepage)
+load();
+
+function load() {
+    document.addEventListener("DOMContentLoaded", UI.loadHomepage);
+}
+
+function dummyTask() {
+    UI.createTask("Finish this damn project", "No date");
+}
