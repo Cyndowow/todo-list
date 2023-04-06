@@ -38,11 +38,11 @@ export default class UI {
         
         const taskButton = document.createElement("button");
         taskButton.classList.add("task-button");
-        taskButton.setAttribute("data", "task-button");
+        //taskButton.setAttribute("data", "data-task-button");
+        //taskButton.dataset.taskButton;
 
-        const circle = document.createElement("i");
-        circle.classList.add("far");
-        circle.classList.add("fa-circle")
+        const checkmark = document.createElement("button");
+        checkmark.classList.add("checkmark");
 
         const taskContent = document.createElement("p");
         taskContent.textContent = name;
@@ -50,24 +50,27 @@ export default class UI {
 
         const inputTaskName = document.createElement("input");
         inputTaskName.classList.add("input-task-name");
-        inputTaskName.setAttribute("data", "task-name-input");
+        //inputTaskName.setAttribute("data", "data-task-name-input");
+        //inputTaskName.dataset.taskNameInput;
 
         const dDate = document.createElement("p");
         dDate.classList.add("due-date");
-        dDate.setAttribute("data", "due-date");
+        //dDate.setAttribute("data", "due-date");
         dDate.setAttribute("id", "due-date");
         dDate.textContent = `${dueDate}`;
 
         const dateInput = document.createElement("input");
         dateInput.classList.add("due-date-input");
-        dateInput.setAttribute("data", "due-date-input");
+        //dateInput.setAttribute("data", "due-date-input");
         dateInput.setAttribute("type", "date");
 
-        const cross = document.createElement("i");
-        cross.classList.add("fas");
-        cross.classList.add("fa-times");
+        const cross = document.createElement("button");
+        cross.innerHTML = "&#10006;"
+        cross.classList.add("task-delete-btn");
+        //cross.setAttribute("data", "data-task-delete");
+        //cross.dataset.taskDelete;
         
-        leftPanel.appendChild(circle);
+        leftPanel.appendChild(checkmark);
         leftPanel.appendChild(taskContent);
         leftPanel.appendChild(inputTaskName);
         rightPanel.appendChild(dDate);
@@ -158,35 +161,6 @@ export default class UI {
             projectPreview.appendChild(addTaskPopup);
             //Details input?
             
-/*            projectPreview.innerHTML = `
-        <h1 id="project-name">${projectName}</h1>
-        <div class="tasks-list" id="tasks-list"></div>`
-
-    if (projectName !== 'Today' && projectName !== 'This week') {
-      projectPreview.innerHTML += `
-        <button class="add-task-button" id="add-task-button">
-          <i class="fas fa-plus"></i>
-          Add Task
-        </button>
-        <div class="add-task-popup" id="add-task-popup">
-          <input
-            class="add-task-input"
-            id="add-task-input"
-            type="text"
-          />
-          <div class="add-task-popup-buttons">
-            <button class="add-task-popup-submit" id="add-task-popup-submit">
-              Add
-            </button>
-            <button
-              class="add-task-popup-cancel"
-              id="add-task-popup-cancel"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>`
-    }*/
 
         UI.loadTasks(projectName);
     }}
@@ -206,9 +180,10 @@ export default class UI {
     }
 
     static initTaskButtons() {
-        const taskButtons = document.querySelectorAll("[data-task-name]");
-        const taskNameInputs = document.querySelectorAll("[data-task-name-input]");
-        const dueDateInputs = document.querySelectorAll("[data-due-date-input]");
+        const taskButtons = document.querySelectorAll(".task-delete-btn");
+        console.log(taskButtons);
+        const taskNameInputs = document.querySelectorAll(".input-task-name");
+        const dueDateInputs = document.querySelectorAll(".due-date-input");
 
         taskButtons.forEach((taskButton) => { //Brackets?
             taskButton.addEventListener("click", UI.handleTaskButton);
@@ -223,11 +198,12 @@ export default class UI {
     }
 
     static handleTaskButton(e) {
-        if(e.target.classList.contains("fa-circle")) {
+        if(e.target.classList.contains("checkmark")) {
             UI.setTaskCompleted(this);
             return;
         }
-        if(e.target.classList.contains("fa-times")) {
+        if(e.target.classList.contains("task-delete-btn")) {
+            console.log("Yep");
             UI.deleteTask(this);
             return;
         }
@@ -262,7 +238,8 @@ export default class UI {
 
     static deleteTask(taskButton) {
         const projectName = document.getElementById("project-name").textContent;
-        const taskName = taskButton.children[0].children[1].textContent; //Debug?
+        const taskName = taskButton.parentNode.parentNode.children[0].children[1].textContent; //Debug?
+        console.log(taskName);
 
         if(projectName === "Today" || projectName === "This week") {
             const mainProjectName = taskName.split("(")[1].split(")")[0];

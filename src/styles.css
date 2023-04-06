@@ -24,6 +24,15 @@ button {
     border-radius: 10px;
     border: none;
     cursor: pointer;
+    background-color: var(--background-light);
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+button:active {
+    background-color: var(--button-active);
 }
 
 body {
@@ -94,8 +103,13 @@ footer {
 .task-button {
     display: flex;
     cursor: default;
-    align-content: center;
+    align-items: center;
     justify-content: space-between;
+}
+
+.task-button:hover,
+.task-button:active {
+    background-color: var(--background-card);
 }
 
 .left-panel {
@@ -122,7 +136,9 @@ footer {
 
 .right-panel {
     display: flex;
-    align-items: center;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
 }
 
 .due-date {
@@ -155,13 +171,14 @@ footer {
     display: block;
 }
 
-.fa-times {
-    margin: 0;
-    cursor: pointer;
+.checkmark {
+    border: 1px solid black;
+    border-radius: 0;
+    margin-right: 15px;
 }
 
-.fa-circle {
+.task-delete-btn {
+    margin: 0;
+    padding: 0;
     font-size: 1.5rem;
-    margin-right: 10px;
-    cursor: pointer;
 }
