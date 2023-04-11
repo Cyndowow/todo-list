@@ -25,12 +25,19 @@ export default class UI {
 
         const projectBtn = document.createElement("button");
         projectBtn.classList.add("project-btn");
-        projectBtn.setAttribute("data", "project-button");
+        //projectBtn.setAttribute("data", "project-button");
+
+        const projectDelete = document.createElement("div");
+        const projectDeleteBtn = document.createElement("button");
+        projectDeleteBtn.classList.add("delete-project-btn");
+        projectDeleteBtn.innerHTML = "&#10006;";
+        projectDelete.appendChild(projectDeleteBtn);
 
         const projectName = document.createElement("div");
         projectName.textContent = name;
 
         projectBtn.appendChild(projectName);
+        projectBtn.appendChild(projectDelete);
         userProjects.appendChild(projectBtn);
 
         UI.initProjectButtons();
@@ -178,7 +185,7 @@ export default class UI {
         const homeBtn = document.getElementById("home-button");
         const todayBtn = document.getElementById("today-button");
         const weekBtn = document.getElementById("week-button");
-        const projectButtons = document.querySelectorAll("[data-project-button]");
+        const projectButtons = document.querySelectorAll(".project-btn");
 
         homeBtn.addEventListener("click", UI.openHomeTasks);
         todayBtn.addEventListener("click", UI.openTodayTasks);
@@ -445,11 +452,16 @@ export default class UI {
         UI.openProject("This week", this);
     }
 
-    /*static handleProjectButton(e) {
-        const projectName = this.children[0].children[1].textContent; //console loggen beim debuggen
+    static handleProjectButton(e) {
+        const projectName = this.parentNode.parentNode.children[0].children[0].textContent; //console loggen beim debuggen
+
+        if(e.target.classList.contains("delete-project-btn")) {
+            UI.deleteProject(projectName, this);
+            return;
+        }
 
         UI.openProject(projectName, this);
-    }*/
+    }
 
     static openProject(projectName, projectButton) {
         const defaultProjectButtons = document.querySelectorAll(".default-btn");
@@ -501,7 +513,13 @@ export default class UI {
         addProjectButton.addEventListener("click", UI.addProject); 
         addProjectPopupButton.addEventListener("click", UI.openAddProjectPopup);
         cancelAddProjectButton.addEventListener("click", UI.closeAddProjectPopup);
-        addProjectInput.addEventListener("keypress", UI.handleProjectButton);
+        addProjectInput.addEventListener("keypress", UI.handleAddProjectButton);
+    }
+
+    static handleAddProjectButton(e) {
+        if(e.key === "Enter") {
+            UI.addProject();
+        }
     }
 
     static openAddProjectPopup() {
