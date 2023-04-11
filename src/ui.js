@@ -1,6 +1,6 @@
 import {format} from "date-fns";
 import Project from "./project";
-import Task from "./task";
+//import Task from "./task";
 import Storage from "./storage";
 
 export default class UI {
@@ -9,6 +9,15 @@ export default class UI {
         UI.loadProjects();
         UI.initProjectButtons();
         UI.openProject("Home", document.getElementById("home-button"));
+    }
+
+    static loadTasks(projectName) {
+        Storage.getTodoList().getProject(projectName)?.getTasks()?.forEach((task) => UI.createTask(task.name, task.dueDate));
+        //Details?
+
+        if(projectName !== "Today" && projectName !== "This week") {
+            UI.initAddTaskButtons();
+        }
     }
 
     static createProject(name) {
@@ -436,11 +445,11 @@ export default class UI {
         UI.openProject("This week", this);
     }
 
-    static handleProjectButton(e) {
+    /*static handleProjectButton(e) {
         const projectName = this.children[0].children[1].textContent; //console loggen beim debuggen
 
         UI.openProject(projectName, this);
-    }
+    }*/
 
     static openProject(projectName, projectButton) {
         const defaultProjectButtons = document.querySelectorAll(".default-btn");
@@ -468,7 +477,7 @@ export default class UI {
         const addProjectPopupInput = document.getElementById("input-add-project");
         const projectName = addProjectPopupInput.value;
 
-        if(projectname === "") {
+        if(projectName === "") {
             alert("Project name can't be empty!");
             return;
         }
@@ -491,7 +500,7 @@ export default class UI {
 
         addProjectButton.addEventListener("click", UI.addProject); 
         addProjectPopupButton.addEventListener("click", UI.openAddProjectPopup);
-        cancelAddProjectButton = document.getElementById("click", UI.closeAddProjectPopup);
+        cancelAddProjectButton.addEventListener("click", UI.closeAddProjectPopup);
         addProjectInput.addEventListener("keypress", UI.handleProjectButton);
     }
 
@@ -519,14 +528,8 @@ export default class UI {
                 UI.createProject(project.name);
             }
         })
+        UI.initAddProjectButtons();
     }
 
-    static loadTasks(projectName) {
-        Storage.getTodoList().getProject(projectName)?.getTasks()?.forEach((task) => UI.createTask(task.name, task.dueDate));
-        //Details?
 
-        if(projectName !== "Today" && projectName !== "This week") {
-            UI.initAddTaskButtons();
-        }
-    }
 }

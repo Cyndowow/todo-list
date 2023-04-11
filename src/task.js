@@ -27,11 +27,11 @@ export default class Task {
         return `${day}.${month}.${year}`;
     }
 
-    setDetails(details) {
+ /*   setDetails(details) {
         this.details = details;
     }
 
     getDetails() {
         return this.details;
-    }
+    }*/
 }
