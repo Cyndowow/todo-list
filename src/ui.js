@@ -1,6 +1,6 @@
 import {format} from "date-fns";
 import Project from "./project";
-//import Task from "./task";
+import Task from "./task";
 import Storage from "./storage";
 
 export default class UI {
@@ -8,7 +8,7 @@ export default class UI {
     static loadHomepage() {
         UI.loadProjects();
         UI.initProjectButtons();
-        UI.openProject("Home", document.getElementById("home-button"));
+        UI.openProject("Today", document.getElementById("today-button"));
     }
 
     static loadTasks(projectName) {
@@ -57,10 +57,10 @@ export default class UI {
         //taskButton.setAttribute("data", "data-task-button");
         //taskButton.dataset.taskButton;
 
-        const checkmark = document.createElement("button");
-        checkmark.classList.add("checkmark");
+        //const checkmark = document.createElement("button");
+        //checkmark.classList.add("checkmark");
 
-        const taskContent = document.createElement("p");
+        const taskContent = document.createElement("button");
         taskContent.textContent = name;
         taskContent.classList.add("task-content");
 
@@ -69,7 +69,7 @@ export default class UI {
         //inputTaskName.setAttribute("data", "data-task-name-input");
         //inputTaskName.dataset.taskNameInput;
 
-        const dDate = document.createElement("p");
+        const dDate = document.createElement("button");
         dDate.classList.add("due-date");
         //dDate.setAttribute("data", "due-date");
         dDate.setAttribute("id", "due-date");
@@ -86,7 +86,7 @@ export default class UI {
         //cross.setAttribute("data", "data-task-delete");
         //cross.dataset.taskDelete;
         
-        leftPanel.appendChild(checkmark);
+        //leftPanel.appendChild(checkmark);
         leftPanel.appendChild(taskContent);
         leftPanel.appendChild(inputTaskName);
         rightPanel.appendChild(dDate);
@@ -182,12 +182,12 @@ export default class UI {
     }}
 
     static initProjectButtons() {
-        const homeBtn = document.getElementById("home-button");
+        //const homeBtn = document.getElementById("home-button");
         const todayBtn = document.getElementById("today-button");
         const weekBtn = document.getElementById("week-button");
         const projectButtons = document.querySelectorAll(".project-btn");
 
-        homeBtn.addEventListener("click", UI.openHomeTasks);
+        //homeBtn.addEventListener("click", UI.openHomeTasks);
         todayBtn.addEventListener("click", UI.openTodayTasks);
         weekBtn.addEventListener("click", UI.openWeekTasks);
         projectButtons.forEach((projectButton) => {
@@ -196,37 +196,51 @@ export default class UI {
     }
 
     static initTaskButtons() {
-        const taskButtons = document.querySelectorAll(".task-delete-btn");
-        console.log(taskButtons);
+        const taskDeleteButtons = document.querySelectorAll(".task-delete-btn");
+        const taskRenameButtons = document.querySelectorAll(".task-content");
+        const taskDateButtons = document.querySelectorAll(".due-date");
         const taskNameInputs = document.querySelectorAll(".input-task-name");
         const dueDateInputs = document.querySelectorAll(".due-date-input");
 
-        taskButtons.forEach((taskButton) => { //Brackets?
-            taskButton.addEventListener("click", UI.handleTaskButton);
+        taskDeleteButtons.forEach((taskButton) => { //Brackets?
+            taskButton.addEventListener("click", UI.handleTaskDeleteButton);
+        });
+        taskRenameButtons.forEach((taskButton) => {
+            taskButton.addEventListener("click", UI.handleTaskRenameButton);
+        });
+        taskDateButtons.forEach((taskButton) => {
+            taskButton.addEventListener("click", UI. handleTaskDateButton);
         });
         taskNameInputs.forEach((taskNameInput) => {
             taskNameInput.addEventListener("click", UI.renameTask);
         });
         dueDateInputs.forEach((dueDateInput) => {
             dueDateInput.addEventListener("change", UI.setTaskDate);
-        })
+        });
 
     }
 
-    static handleTaskButton(e) {
-        if(e.target.classList.contains("checkmark")) {
+    /*if(e.target.classList.contains("checkmark")) {
             UI.setTaskCompleted(this);
             return;
-        }
+        }*/
+
+    static handleTaskDeleteButton(e) {
         if(e.target.classList.contains("task-delete-btn")) {
             console.log("Yep");
             UI.deleteTask(this);
             return;
         }
+    }
+
+    static handleTaskRenameButton(e) {
         if(e.target.classList.contains("task-content")) {
             UI.openRenameInput(this);
             return;
         }
+    }
+
+    static handleTaskDateButton(e) {
         if(e.target.classList.contains("due-date")) {
             UI.openSetDateInput(this);
         }
@@ -254,7 +268,7 @@ export default class UI {
 
     static deleteTask(taskButton) {
         const projectName = document.getElementById("project-name").textContent;
-        const taskName = taskButton.parentNode.parentNode.children[0].children[1].textContent; //Debug?
+        const taskName = taskButton.parentNode.parentNode.children[0].children[0].textContent; //Debug?
         console.log(taskName);
 
         if(projectName === "Today" || projectName === "This week") {
@@ -312,7 +326,7 @@ export default class UI {
             return;
         }*/
 
-        //Storage.addTask(projectName, new Task(taskName));
+        Storage.addTask(projectName, new Task(taskName));
         UI.createTask(taskName, "No date");
         UI.closeAddTaskPopup();
     }
@@ -361,13 +375,13 @@ export default class UI {
         }
         UI.clearTasks();
         UI.loadTasks(projectName);
-        UI.closeRenameInput(this.parentNode.parentNode); //Debug?
+        UI.closeRenameInput(this); //Debug?
     }
 
-    static openRenameInput(taskButton) { //Debug much?
-        const taskNamePara = taskButton.children[0].children[1];
+    static openRenameInput(taskButton) {
+        const taskNamePara = taskButton;
         let taskName = taskNamePara.textContent;
-        const taskNameInput = taskButton.children[0].children[2];
+        const taskNameInput = taskButton.parentNode.children[1];
         const projectName = taskButton.parentNode.parentNode.children[0].textContent;
 
         if(projectName === "Today" || projectName === "This week") {
@@ -381,8 +395,8 @@ export default class UI {
     }
 
     static closeRenameInput(taskButton) {
-        const taskName = taskButton.children[0].children[1]; //Debug?
-        const taskNameInput = taskButton.children[0].children[2]; //Debug?
+        const taskName = taskButton.parentNode.children[0]; //Debug?
+        const taskNameInput = taskButton.parentNode.children[1]; //Debug?
 
         taskName.classList.remove("active");
         taskNameInput.classList.remove("active");
@@ -390,8 +404,9 @@ export default class UI {
     }
 
     static openSetDateInput(taskButton) {
-        const dueDate = taskButton.children[1].children[0]; //Debug?
-        const dueDateInput = taskButton.children[1].children[1]; //Debug?
+        const dueDate = taskButton; //Debug?
+        console.log(dueDate);
+        const dueDateInput = taskButton.parentNode.children[1]; //Debug?
 
         UI.closeAllPopups();
         dueDate.classList.add("active");
@@ -409,8 +424,8 @@ export default class UI {
     static setTaskDate() { //Debug much again?
         const taskButton = this.parentNode.parentNode;
         const projectName = document.getElementById("project-name").textContent;
-        const taskName = taskButton.children[0].children[1].textContent;
-        const newDueDate = format(new Date(this.value), "dd/mm/yyyy");
+        const taskName = taskButton.children[0].children[0].textContent;
+        const newDueDate = format(new Date(this.value), "dd.MM.yyyy");
 
         if(projectName === "Today" || projectName === "This week") {
             const mainProjectName = taskName.split("(")[1].split(")")[0];
@@ -423,10 +438,10 @@ export default class UI {
                 Storage.updateWeekProject();
             }
         } else {
-            Storage.setTaskDate(projectName, taskname, newDueDate);
+            Storage.setTaskDate(projectName, taskName, newDueDate);
         }
 
-        UI.clearTasksU();
+        UI.clearTasks();
         UI.loadTasks(projectName);
         UI.closeSetDateInput(taskButton);
     }
@@ -453,7 +468,8 @@ export default class UI {
     }
 
     static handleProjectButton(e) {
-        const projectName = this.parentNode.parentNode.children[0].children[0].textContent; //console loggen beim debuggen
+        const projectName = this.children[0].textContent;
+        console.log(projectName); //console loggen beim debuggen
 
         if(e.target.classList.contains("delete-project-btn")) {
             UI.deleteProject(projectName, this);
@@ -472,6 +488,7 @@ export default class UI {
         buttons.forEach((button) => button.classList.remove("active"));
         projectButton.classList.add("active");
         UI.closeAddProjectPopup();
+        UI.clearProjectPreview();
         UI.loadProjectContent(projectName);
     }
 
@@ -481,7 +498,7 @@ export default class UI {
         const addProjectPopupInput = document.getElementById("input-add-project");
 
         addProjectButton.classList.remove("active");
-        addProjectPopup.classList.remove("acitve");
+        addProjectPopup.classList.remove("active");
         addProjectPopupInput.value = "";
     }
 

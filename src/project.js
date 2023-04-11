@@ -22,7 +22,7 @@ export default class Project {
         return this.tasks;
     }
 
-    getTasks(taskName) {
+    getTask(taskName) {
         return this.tasks.find((task) => task.getName() === taskName);
     }
 

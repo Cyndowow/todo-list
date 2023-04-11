@@ -44,13 +44,25 @@ h1 {
     display: flex;
 }
 
-header {
+.header {
     display: flex;
+    flex-direction: column;
     background-color: var(--background);
     color: var(--white-text);
-    font-size: x-large;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.page-name {
+    display: flex;
+    font-size: 2.5rem;
+    font-weight: bold;
+    align-self: center;
+}
+
+.instruction {
+    display: flex;
+    font-size: 1.5rem;
+    margin-left: 10px;
 }
 
 footer {
@@ -100,12 +112,19 @@ footer {
     font-size: 1.5rem;
 }
 
-.task-button,
-.project-btn {
+.task-button {
     display: flex;
     cursor: default;
     align-items: center;
     justify-content: space-between;
+}
+
+.project-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .task-button:hover,
