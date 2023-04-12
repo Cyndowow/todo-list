@@ -44,6 +44,7 @@ h1 {
     display: flex;
 }
 
+
 .header {
     display: flex;
     flex-direction: column;
@@ -105,6 +106,18 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.add-project-btn.active {
+    display: none;
+}
+
+.add-project-popup {
+    display: none;
+}
+
+.add-project-popup.active {
+    display: block;
 }
 
 .custom-projects {

@@ -246,7 +246,7 @@ export default class UI {
         }
     }
 
-    static setTaskCompleted(taskButton) {
+    /*static setTaskCompleted(taskButton) {
         const projectName = document.getElementById("project-name").textContent;
         const taskName = taskButton.children[0].children[1].textContent; //Debug?
 
@@ -264,7 +264,7 @@ export default class UI {
 
         UI.clearTasks();
         UI.loadTasks(projectName);
-    }
+    }*/
 
     static deleteTask(taskButton) {
         const projectName = document.getElementById("project-name").textContent;
@@ -460,10 +460,12 @@ export default class UI {
     }
 
     static openTodayTasks() {
+        Storage.updateTodayProject();
         UI.openProject("Today", this);
     }
 
     static openWeekTasks() {
+        Storage.updateWeekProject();
         UI.openProject("This week", this);
     }
 
@@ -494,7 +496,7 @@ export default class UI {
 
     static closeAddProjectPopup() {
         const addProjectPopup =  document.getElementById("add-project-popup");
-        const addProjectButton = document.getElementById("add-project-submit");
+        const addProjectButton = document.getElementById("add-project-btn");
         const addProjectPopupInput = document.getElementById("input-add-project");
 
         addProjectButton.classList.remove("active");
