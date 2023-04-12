@@ -21,10 +21,10 @@ export default class Task {
     }
 
     getDateFormatted() {
-        const day = this.dueDate.split("/")[0];
-        const month = this.dueDate.split("/")[1];
+        const day = this.dueDate.split("/")[1];
+        const month = this.dueDate.split("/")[0];
         const year = this.dueDate.split("/")[2];
-        return `${day}.${month}.${year}`;
+        return `${day}/${month}/${year}`
     }
 
  /*   setDetails(details) {

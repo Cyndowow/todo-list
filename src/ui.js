@@ -177,9 +177,9 @@ export default class UI {
             projectPreview.appendChild(addTaskPopup);
             //Details input?
             
-
+        }
         UI.loadTasks(projectName);
-    }}
+    }
 
     static initProjectButtons() {
         //const homeBtn = document.getElementById("home-button");
@@ -351,7 +351,6 @@ export default class UI {
         const projectName = document.getElementById("project-name").textContent;
         const taskName = this.previousElementSibling.textContent; //Debug?
         const newTaskName = this.value;
-        console.log(projectName, taskName, newTaskName)
 
         if(newTaskName === "") {
             alert("Task name can't be empty!");
@@ -423,7 +422,7 @@ export default class UI {
         const taskButton = this.parentNode.parentNode;
         const projectName = document.getElementById("project-name").textContent;
         const taskName = taskButton.children[0].children[0].textContent;
-        const newDueDate = format(new Date(this.value), "dd.MM.yyyy");
+        const newDueDate = format(new Date(this.value), "dd/MM/yyyy");
 
         if(projectName === "Today" || projectName === "This week") {
             const mainProjectName = taskName.split("(")[1].split(")")[0];
