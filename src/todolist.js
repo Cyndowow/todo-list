@@ -46,9 +46,10 @@ export default class TodoList {
                 return;
             }
             const todayTasks = project.getTasksToday();
+            console.log(todayTasks);
             todayTasks.forEach((task) => {
                 const taskName = `${task.getName()} (${project.getName()})`;
-                this.getProject("Today").addTask(new Task(taskName, task.getDetails(), task.getDate()));
+                this.getProject("Today").addTask(new Task(taskName, /*task.getDetails(),*/ task.getDate()));
             })
         })
     }

@@ -217,6 +217,7 @@ footer {
     margin: 0;
     padding: 0;
     font-size: 1.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    margin-left: 5px;
 }

@@ -212,7 +212,7 @@ export default class UI {
             taskButton.addEventListener("click", UI. handleTaskDateButton);
         });
         taskNameInputs.forEach((taskNameInput) => {
-            taskNameInput.addEventListener("click", UI.renameTask);
+            taskNameInput.addEventListener("keypress", UI.renameTask);
         });
         dueDateInputs.forEach((dueDateInput) => {
             dueDateInput.addEventListener("change", UI.setTaskDate);
@@ -227,7 +227,6 @@ export default class UI {
 
     static handleTaskDeleteButton(e) {
         if(e.target.classList.contains("task-delete-btn")) {
-            console.log("Yep");
             UI.deleteTask(this);
             return;
         }
@@ -269,7 +268,6 @@ export default class UI {
     static deleteTask(taskButton) {
         const projectName = document.getElementById("project-name").textContent;
         const taskName = taskButton.parentNode.parentNode.children[0].children[0].textContent; //Debug?
-        console.log(taskName);
 
         if(projectName === "Today" || projectName === "This week") {
             const mainProjectName = taskName.split("(")[1].split(")")[0];
@@ -353,6 +351,7 @@ export default class UI {
         const projectName = document.getElementById("project-name").textContent;
         const taskName = this.previousElementSibling.textContent; //Debug?
         const newTaskName = this.value;
+        console.log(projectName, taskName, newTaskName)
 
         if(newTaskName === "") {
             alert("Task name can't be empty!");
@@ -375,7 +374,7 @@ export default class UI {
         }
         UI.clearTasks();
         UI.loadTasks(projectName);
-        UI.closeRenameInput(this); //Debug?
+        UI.closeRenameInput(this); 
     }
 
     static openRenameInput(taskButton) {
@@ -405,7 +404,6 @@ export default class UI {
 
     static openSetDateInput(taskButton) {
         const dueDate = taskButton; //Debug?
-        console.log(dueDate);
         const dueDateInput = taskButton.parentNode.children[1]; //Debug?
 
         UI.closeAllPopups();
@@ -455,9 +453,9 @@ export default class UI {
         });
     }
 
-    static openHomeTasks() {
+    /*static openHomeTasks() {
         UI.openProject("Home", this);
-    }
+    }*/
 
     static openTodayTasks() {
         Storage.updateTodayProject();
@@ -471,7 +469,6 @@ export default class UI {
 
     static handleProjectButton(e) {
         const projectName = this.children[0].textContent;
-        console.log(projectName); //console loggen beim debuggen
 
         if(e.target.classList.contains("delete-project-btn")) {
             UI.deleteProject(projectName, this);
